@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+  nginx:
+    image: walletconnect-nginx:latest
+    container_name: nginx
+    hostname: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - bridge
+
+  bridge:
+    image: walletconnect-bridge:latest
+    container_name: bridge
+    hostname: walletconnect
+    restart: always
+    environment:
+      NODE_ENV: production
+      PORT: "5001"
+      REDIS_URL: redis://walletconnect.xcr6mp.0001.euc1.cache.amazonaws.com:6379/0
